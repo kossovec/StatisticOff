@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       <bean id="viewResolver"
+             class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+              <property name="viewClass"
+                        value="org.springframework.web.servlet.view.JstlView" />
+              <property name="prefix" value="/WEB-INF/view/" />
+              <property name="suffix" value=".jsp" />
+       </bean>
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="WEB-INF/auth.properties"/>
+    </bean>
+    <bean id="authority" class="jcifs.smb.NtlmPasswordAuthentication">
+        <constructor-arg  value="${domain}"/>
+        <constructor-arg  value="${login}"/>
+        <constructor-arg  value="${password}"/>
+    </bean>
+        <bean id="smbFile" class="jcifs.smb.SmbFile">
+        <constructor-arg value="${url}"/>
+        <constructor-arg value="authority"/>
+    </bean>
+
+       <context:component-scan base-package="ua.kossovec.dao"/>
+</beans>
