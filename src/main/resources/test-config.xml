@@ -14,10 +14,12 @@
         <constructor-arg  value="${login}"/>
         <constructor-arg  value="${password}"/>
     </bean>
-    <bean id="smbFile" class="jcifs.smb.SmbFile">
-        <constructor-arg value="${url}"/>
-        <constructor-arg value="authority"/>
-    </bean>
+    <!--<bean id="smbFile1" class="jcifs.smb.SmbFile">-->
+        <!--<constructor-arg value="${url}"/>-->
+        <!--<constructor-arg value="authority"/>-->
+    <!--</bean>-->
+
 
     <context:component-scan base-package="ua.kossovec.dao"/>
+    <context:component-scan base-package="ua.kossovec.service"/>
 </beans>

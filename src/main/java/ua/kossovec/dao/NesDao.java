@@ -5,6 +5,7 @@ import ua.kossovec.model.Ne;
 import java.util.List;
 
 public interface NesDao {
-  List<Ne> getNes();
-
+  Ne getNeByName(String neName);
+  List<Ne> getAllNes();
+  List<Ne> getAllAxeNes();
 }
