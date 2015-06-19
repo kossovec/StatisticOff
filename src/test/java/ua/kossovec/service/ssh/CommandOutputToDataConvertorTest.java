@@ -13,7 +13,6 @@ public class CommandOutputToDataConvertorTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(sshService.connect(Mockito.anyString())).thenReturn(null);
         Mockito.when(sshService.sendCommand("afpls")).thenReturn(
                 "RELCMDHDF                         \n" +
                 "RIRTRQ                            \n" +

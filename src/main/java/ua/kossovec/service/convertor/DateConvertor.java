@@ -1,16 +1,21 @@
 package ua.kossovec.service.convertor;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DateConvertor {
-    public static String covertToSTMMPFormat(Calendar calendar) {
-        Date endTime = calendar.getTime();
-        SimpleDateFormat dateFormatYMD = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat dateFormatHH = new SimpleDateFormat("HH");
-        String firstPartOfDate = dateFormatYMD.format(endTime);
-        int hour = Integer.parseInt(dateFormatHH.format(endTime)) + 1;
-        return firstPartOfDate + hour + "00";
+  public static String covertToSTMMPFormat(Calendar calendar) {
+    int year = calendar.get(Calendar.YEAR);
+    int month = calendar.get(Calendar.MONTH);
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+    int minute = calendar.get(Calendar.MINUTE);
+    String sMonth = (month < 10) ? "0" + month : "" + month;
+    String sDay = (day < 10) ? "0" + day : "" + day;
+    if (minute != 0) {
+      hour += 1;
     }
+
+    String sHour = (hour < 10) ? "0" + hour : "" + hour;
+    return year + sMonth + sDay + sHour + "00";
+  }
 }
