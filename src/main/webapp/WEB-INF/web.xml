@@ -8,8 +8,12 @@
        <servlet-name>StatisticOff</servlet-name>
        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
        <init-param>
+           <param-name>log4jPropertiesLocation</param-name>
+           <param-value>WEB-INF/log4j.properties</param-value>
+       </init-param>
+       <init-param>
            <param-name>contextConfigLocation</param-name>
-           <param-value>WEB-INF/springContext.xml</param-value>
+           <param-value>classpath:springContext.xml</param-value>
        </init-param>
    </servlet>
     <servlet-mapping>

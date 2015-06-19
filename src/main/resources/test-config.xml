@@ -7,19 +7,14 @@
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="WEB-INF/auth.properties"/>
+        <property name="location" value="/auth.properties"/>
     </bean>
-    <bean id="authority" class="jcifs.smb.NtlmPasswordAuthentication">
-        <constructor-arg  value="${domain}"/>
-        <constructor-arg  value="${login}"/>
-        <constructor-arg  value="${password}"/>
+    <bean id="sshService" class="ua.kossovec.service.ssh.SshServiceImpl">
+        <constructor-arg name="domain" value="${domain}"/>
+        <constructor-arg name="login" value="${login}"/>
+        <constructor-arg name="password" value="${password}"/>
+        <constructor-arg name="port" value="22"/>
+        <constructor-arg name="timeOut" value="60000"/>
     </bean>
-    <!--<bean id="smbFile1" class="jcifs.smb.SmbFile">-->
-        <!--<constructor-arg value="${url}"/>-->
-        <!--<constructor-arg value="authority"/>-->
-    <!--</bean>-->
 
-
-    <context:component-scan base-package="ua.kossovec.dao"/>
-    <context:component-scan base-package="ua.kossovec.service"/>
 </beans>
