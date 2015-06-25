@@ -8,4 +8,5 @@ public interface NesDao {
   Ne getNeByName(String neName);
   List<Ne> getAllNes();
   List<Ne> getAllAxeNes();
+  List<Ne> getAllNotLinuxAxeBsc();
 }

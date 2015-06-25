@@ -9,12 +9,12 @@ import java.io.InputStream;
 @Component
 public class SshServiceImpl implements SshService {
     private static final Logger LOGGER = Logger.getLogger(SshServiceImpl.class);
-    private final JSch sshChannel;
-    private final String domain;
-    private final String login;
-    private final String password;
-    private final int port;
-    private final int timeOut;
+    private  JSch sshChannel;
+    private  String domain;
+    private  String login;
+    private  String password;
+    private  int port;
+    private  int timeOut;
     private Session session;
 
     public SshServiceImpl(String domain, String login, String password, int port, int timeOut) {
@@ -24,6 +24,9 @@ public class SshServiceImpl implements SshService {
         this.password = password;
         this.port = port;
         this.timeOut = timeOut;
+    }
+
+    public SshServiceImpl() {
     }
 
     @Override

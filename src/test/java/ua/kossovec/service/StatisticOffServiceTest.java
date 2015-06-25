@@ -7,8 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import ua.kossovec.dao.NesDao;
 import ua.kossovec.dao.NesDaoImpl;
 import ua.kossovec.model.Ne;
 
@@ -31,8 +29,8 @@ public class StatisticOffServiceTest {
 
     private final static String NE_NAME = "BSC 147";
 
-    @Test
-    public void staticOffTest() {
-        Assert.assertTrue(offService.disableStatistic(NE_NAME, new GregorianCalendar()));
-    }
+//    @Test
+//    public void staticOffTest() {
+//        Assert.assertTrue(offService.disableStatistic(NE_NAME, new GregorianCalendar()));
+//    }
 }

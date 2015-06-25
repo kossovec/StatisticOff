@@ -2,29 +2,51 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
-       <bean id="viewResolver"
-             class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-              <property name="viewClass"
-                        value="org.springframework.web.servlet.view.JstlView" />
-              <property name="prefix" value="/WEB-INF/view/" />
-              <property name="suffix" value=".jsp" />
-       </bean>
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+     <mvc:annotation-driven/>
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="WEB-INF/auth.properties"/>
-    </bean>
-    <bean id="authority" class="jcifs.smb.NtlmPasswordAuthentication">
-        <constructor-arg  value="${domain}"/>
-        <constructor-arg  value="${login}"/>
-        <constructor-arg  value="${password}"/>
-    </bean>
-        <bean id="smbFile" class="jcifs.smb.SmbFile">
-        <constructor-arg value="${url}"/>
-        <constructor-arg value="authority"/>
+        <property name="location" value="classpath:/auth.properties"/>
     </bean>
 
-       <context:component-scan base-package="ua.kossovec.dao"/>
-       <context:component-scan base-package="ua.kossovec.service"/>
+    <bean id="authority" class="jcifs.smb.NtlmPasswordAuthentication">
+        <constructor-arg value="${domain}"/>
+        <constructor-arg value="${login}"/>
+        <constructor-arg value="${password}"/>
+    </bean>
+
+    <bean id="smbFile" class="jcifs.smb.SmbFile">
+        <constructor-arg value="${url}"/>
+        <constructor-arg ref="authority"/>
+    </bean>
+    
+    <bean id="sshService" class="ua.kossovec.service.ssh.SshServiceImpl">
+        <constructor-arg name="domain" value="${domain}"/>
+        <constructor-arg name="login" value="${login}"/>
+        <constructor-arg name="password" value="${password}"/>
+        <constructor-arg name="port" value="22"/>
+        <constructor-arg name="timeOut" value="60000"/>
+    </bean>
+    
+    <bean id="datePrepare" class="ua.kossovec.service.DataPrepare">
+    </bean>
+
+    <bean id="name" class="java.lang.String">
+        <constructor-arg value="KS_Hosts_List.csv"/>
+    </bean>
+
+    <context:component-scan base-package="ua.kossovec.dao"/>
+    <context:component-scan base-package="ua.kossovec.service"/>
+    <context:component-scan base-package="ua.kossovec.controller"/>
 </beans>

@@ -14,26 +14,36 @@ import java.io.InputStream;
 import java.util.List;
 
 public class CsvParserTest {
-  private static String FILE_DATE = "MGW 001;1;1;1;11.441;;;23;;;";
-  private InputStream inputStream = new ByteArrayInputStream(FILE_DATE.getBytes());
-  @Mock
-  SmbFile smbFile;
+    private static String FILE_DATE = "MGW 001;1;1;1;11.441;;;23;;;";
+    private static String FILE_DATE_EMPTY = ";;;;;;;;;;";
+    private InputStream inputStream = new ByteArrayInputStream(FILE_DATE.getBytes());
+    private InputStream inputStreamWithEmptyLine = new ByteArrayInputStream(FILE_DATE_EMPTY.getBytes());
 
-  @Before
-  public void init() throws IOException {
-    MockitoAnnotations.initMocks(this);
-    Mockito.when(smbFile.getInputStream()).thenReturn(inputStream);
-  }
+    @Mock
+    SmbFile smbFile;
 
-  @Test
-  public void getLineFromFile() {
-    CsvParser parser = new CsvParser(smbFile);
-    String lineFromList = null;
-    List<String> lines = parser.getLinesFromCsv();
-    for (String line : lines) {
-      lineFromList = line;
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
-    Assert.assertEquals(lineFromList, FILE_DATE);
-  }
+    @Test
+    public void getLineFromFile() throws IOException {
+        Mockito.when(smbFile.getInputStream()).thenReturn(inputStream);
+        CsvParser parser = new CsvParser(smbFile, "NotExistFile");
+        String lineFromList = null;
+        List<String> lines = parser.getLinesFromCsv();
+        for (String line : lines) {
+            lineFromList = line;
+        }
+        Assert.assertEquals(lineFromList, FILE_DATE);
+    }
+
+    @Test
+    public void skipLineIfLineIsEmpty() throws IOException {
+        Mockito.when(smbFile.getInputStream()).thenReturn(inputStreamWithEmptyLine);
+        CsvParser parser = new CsvParser(smbFile, "NotExistFile");
+        List<String> lines = parser.getLinesFromCsv();
+        Assert.assertTrue(lines.size() == 0);
+    }
 }

@@ -1,6 +1,7 @@
 package ua.kossovec.service;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ public class SshServiceTest {
     SshService sshService;
 
     private final static String TEST_IP = "10.49.8.17";
-
+    @Ignore
     @Test
     public void loginOKTest() throws IOException {
         Assert.assertNull(sshService.connect(TEST_IP));
     }
+    @Ignore
     @Test
     public void commandSendTest() {
         String expected = "BSC147APG43B";

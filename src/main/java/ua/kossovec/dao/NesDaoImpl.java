@@ -53,4 +53,26 @@ public class NesDaoImpl implements NesDao {
     }
     return allNesList;
   }
+
+  @Override
+  public List<Ne> getAllNotLinuxAxeBsc() {
+    List<String> linesFromCsv = csvParser.getLinesFromCsv();
+    List<Ne> allNotLinuxAxeBsc = new ArrayList<>();
+    for (String line: linesFromCsv) {
+      Ne ne = NeMapper.mapNe(line);
+      String neName = ne.getName();
+      int type = ne.getType();
+      String[] splitNeName = neName.split("\\s+");
+      String neNameType = splitNeName[0];
+      String neNumber = splitNeName[1];
+
+      if (neNameType.equals("BSC") && type == AXE_TYPE){
+        if (Integer.parseInt(neNumber) < 400) {
+          allNotLinuxAxeBsc.add(ne);
+        }
+      }
+    }
+    return allNotLinuxAxeBsc;
+
+  }
 }
