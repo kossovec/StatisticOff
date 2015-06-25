@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import ua.kossovec.dao.NesDao;
 import ua.kossovec.model.Ne;
+import ua.kossovec.service.MailService;
 import ua.kossovec.service.StatisticOffService;
 import ua.kossovec.service.convertor.DateConvertor;
 import ua.kossovec.service.exeption.WrongTimeExeption;
@@ -21,19 +22,21 @@ import java.util.List;
 @Controller
 public class HomeController {
     private final NesDao nesDao;
+    private final MailService mailService;
     private List<Ne> allNotLinuxAxeBsc;
     private StatisticOffService statisticOffService;
 
     @Autowired
-    public HomeController(NesDao nesDao, StatisticOffService statisticOffService) {
+    public HomeController(NesDao nesDao, StatisticOffService statisticOffService, MailService mailService) {
         this.nesDao = nesDao;
         this.statisticOffService = statisticOffService;
+        this.mailService = mailService;
         allNotLinuxAxeBsc = nesDao.getAllNotLinuxAxeBsc();
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String home(Model model, @ModelAttribute(value = "error") String error,
-                                    @ModelAttribute(value = "message") String message) {
+                       @ModelAttribute(value = "message") String message) {
         if (error != null) {
             model.addAttribute("error", error);
         }
@@ -53,11 +56,12 @@ public class HomeController {
         try {
             statisticOffService.disableStatistic(name, calendar);
             redirectAttributes.addFlashAttribute("message", "Statistic is OFF on: " + name);
+            mailService.sendPreConfiguredMail("Redefine Statistic on: " + name);
         } catch (WrongTimeExeption e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        RedirectView redirectView = new RedirectView("/StatisticOff/", true);
+        RedirectView redirectView = new RedirectView("/home", true);
         redirectView.setExposeModelAttributes(false);
         return redirectView;
     }

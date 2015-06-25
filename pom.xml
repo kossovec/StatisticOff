@@ -7,7 +7,7 @@
     <artifactId>StatisticOff</artifactId>
     <packaging>war</packaging>
 
-    <version>1.0-SNAPSHOT</version>
+    <version>1</version>
     <name>StatisticOff Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
@@ -86,6 +86,21 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>0.1.53</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springVersion}</version>
         </dependency>
     </dependencies>
     <build>
